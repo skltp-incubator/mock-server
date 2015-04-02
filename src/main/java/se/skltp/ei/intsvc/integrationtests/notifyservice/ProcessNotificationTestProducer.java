@@ -45,19 +45,10 @@ public class ProcessNotificationTestProducer implements ProcessNotificationRespo
 	@Value("timeout")
 	private long SERVICE_TIMOUT_MS;
 
-	private static Object lastPaylaod = null;
-	private static List<String> lastLogialAddresses = new ArrayList<String>();
-	
 	@Override
 	public ProcessNotificationResponseType processNotification(String logicalAddress, ProcessNotificationType request) {
 
 		log.info("ProcessNotificationTestProducer received a notification request with {} transactions for logical-address {}", request.getEngagementTransaction().size(), logicalAddress);
-
-		// Save the logicalAddress for later use by integration tests
-		lastLogialAddresses.add(logicalAddress);
-		
-		
-		lastPaylaod = request;
 
         // Force a timeout if timeout Id
         String residentId = request.getEngagementTransaction().get(0).getEngagement().getRegisteredResidentIdentification();
@@ -75,16 +66,4 @@ public class ProcessNotificationTestProducer implements ProcessNotificationRespo
             Thread.sleep(SERVICE_TIMOUT_MS + 1000);
         } catch (InterruptedException e) {}
     }
-
-	public static Object getLastPayload() {
-		return lastPaylaod;
-	}
-	
-	public static List<String> getLastLogialAddresses() {
-		return lastLogialAddresses;
-	}
-	
-	public static void clearLastLogicalAddresses() {
-		lastLogialAddresses.clear();
-	}
 }
