@@ -8,12 +8,38 @@
     </encoder>
   </appender>
 
+  <appender name="NOTIFICATIONDATAAPPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logs/notificationdata.log</file>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>logs/notificationdata.%i.log</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>10</maxIndex>
+    </rollingPolicy>
+
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>50MB</maxFileSize>
+    </triggeringPolicy>
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+  </appender>
+
   <logger name="se.skltp.ei.intsvc.integrationstests.notifyservice" level="INFO" additivity="false">
     <appender-ref ref="STDOUT" />
   </logger>
+  
+  <!-- Avoid writing soap message to log -->
+  <logger name="org.apache.cxf.services" level="WARN" additivity="false">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <logger name="NOTIFICATIONDATA" level="INFO" additivity="false">
+    <appender-ref ref="NOTIFICATIONDATAAPPENDER" />
+  </logger>
 
   <!-- By default, the level of the root level is set to DEBUG -->
-  <root level="WARN">
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>
