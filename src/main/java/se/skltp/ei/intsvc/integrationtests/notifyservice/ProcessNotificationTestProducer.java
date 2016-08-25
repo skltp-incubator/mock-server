@@ -53,8 +53,7 @@ public class ProcessNotificationTestProducer implements ProcessNotificationRespo
 	private static final Logger log = LoggerFactory.getLogger(ProcessNotificationTestProducer.class);
 	private static final Logger datalog = LoggerFactory.getLogger("NOTIFICATIONDATA");
 
-	private static Calendar cal = Calendar.getInstance();
-	private static DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+	private static DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss.SSS");
 	
 	@Value("timeout")
 	private long SERVICE_TIMOUT_MS;
@@ -73,7 +72,7 @@ public class ProcessNotificationTestProducer implements ProcessNotificationRespo
 		log.info("ProcessNotificationTestProducer received a notification request with {} transactions for logical-address {}", request.getEngagementTransaction().size(), logicalAddress);
 
 		// Get current date and time
-		String now = dateFormat.format(cal.getTime());
+		String now = dateFormat.format(Calendar.getInstance().getTime());
 		
 		// Get the list of transactions
 		List<EngagementTransactionType> eiTran = request.getEngagementTransaction();
@@ -135,9 +134,15 @@ public class ProcessNotificationTestProducer implements ProcessNotificationRespo
         } catch (InterruptedException e) {}
     }
     
-    /*
-    public static void main(String[] args) {
+/*
+    
+    public static void main(String[] args) throws InterruptedException {
 		System.out.println(createHash("12121212-1212"));
+		String now = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println(now);
+		Thread.sleep(2000);
+		now = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println(now);
 	}
-	*/
+*/
 }
