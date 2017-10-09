@@ -87,9 +87,10 @@ public class ProcessNotificationTestProducer implements ProcessNotificationRespo
 			String source = e.getSourceSystem();
 			String logAddr = e.getLogicalAddress();
 			String person = e.getRegisteredResidentIdentification();
+			String creationTime = e.getCreationTime();
+			String updateTime = e.getUpdateTime();
 
-
-			datalog.info("{}, {}, {}, {}, {}, {}, {}", now, createHash(person), logAddr, source, domain, cat, del);
+			datalog.info("{}, {}, {}, {}, {}, {}, {}, {}, {}", now, createHash(person), logAddr, source, domain, cat, del, creationTime, updateTime);
 		}
 
         // Force a timeout if timeout Id
